@@ -1,16 +1,21 @@
 <resources>
     <string name="app_name">OW2Garmin</string>
-    <string name="title_activity_info">InfoActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="intent_action">OW2GARMIN_ACTION_BIND</string>
     <string name="garmin_title_text">Garmin Device Status</string>
     <string name="onewheel_title_text">Onewheel Status</string>
     <string name="info_button_title">Info + Help</string>
     <string name="notification_button_title">Open notification settings</string>
+    <string name="no_onewheel_data_available_text">No data available. Did you remember to launch the Onewheel App in the background?</string>
+    <string name="unable_to_read_onewheel_data">Unable to read data from Onewheel App. Did you grant notification access?</string>
+    <string name="light_symbol_red">🔴</string>
+    <string name="light_symbol_orange">🟠</string>
+    <string name="light_symbol_green">🟢</string>
+    <string name="range_text">Range</string>
+    <string name="garmin_not_installed_text">Garmin Connect App is not installed</string>
+    <string name="garmin_update_required_text">Please update your Garmin Connect App</string>
+    <string name="garmin_service_error_text">Garmin Connect App returned a service error</string>
+    <string name="device_status_connected_text">connected</string>
+    <string name="device_status_not_connected_text">not connected</string>
+    <string name="device_status_not_paired_text">not paired</string>
+    <string name="device_status_unknown_text">status unknown</string>
 </resources>

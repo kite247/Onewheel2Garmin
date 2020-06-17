@@ -26,13 +26,13 @@ class OwBatteryApp extends Application.AppBase {
 
     function onStart(state) {
     	// Uncomment following block to test display of data without companion mobile app
-    	///*
+    	/*
     	var batteryPercentage = 98;
     	var rangeString = "5 mi";
     	var notificationTitle = "Connected to Onewheel";
     	var data = [batteryPercentage, rangeString, notificationTitle];
     	parseReceivedData(data);
-    	//*/
+    	*/
     }
 
     function onStop(state) {

@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
     var helpButton: Button? = null
     var notificationAccessGranted: Boolean = false
 
-
     private val myConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName,
                                         service: IBinder
@@ -35,8 +34,6 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
             isBound = true
 
             updateUiData()
-
-
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
@@ -54,13 +51,13 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
         percentageTextView = findViewById<TextView>(R.id.percentageValue)
 
         val intent = Intent(this, MyNotificationListener::class.java)
-        intent.action = "com.floatangels.onewheel2garmin"
+        intent.action = getString(R.string.intent_action)
         bindService(intent, myConnection, Context.BIND_AUTO_CREATE)
 
         helpButton = findViewById(R.id.helpButton)
         helpButton?.setOnClickListener{
-            val intent = Intent(this, InfoActivity::class.java)
-            startActivity(intent)
+            val infoIntent = Intent(this, InfoActivity::class.java)
+            startActivity(infoIntent)
         }
     }
 
@@ -75,14 +72,14 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
         if(isBound) {
             var onewheelTrafficLightIcon: String?
             if(myService?.onewheelBatteryPercentage==-1) {
-                onewheelTrafficLightIcon = "\uD83D\uDD34" // Red light
-                statusText?.text = "No data available"
+                onewheelTrafficLightIcon = getString(R.string.light_symbol_red)
+                statusText?.text = getString(R.string.no_onewheel_data_available_text)
                 percentageTextView?.visibility = View.GONE
                 rangeText?.visibility = View.GONE
             } else {
-                onewheelTrafficLightIcon = "\uD83D\uDFE2" // Green light
+                onewheelTrafficLightIcon = getString(R.string.light_symbol_green)
                 percentageTextView?.text = "${myService?.onewheelBatteryPercentage.toString()}%"
-                rangeText?.text = "Range: ${myService?.onewheelRangeInfo}"
+                rangeText?.text = "${getString(R.string.range_text)}: ${myService?.onewheelRangeInfo}"
                 statusText?.text = "${myService?.onewheelNotificationTitle}"
                 percentageTextView?.visibility = View.VISIBLE
                 rangeText?.visibility = View.VISIBLE
@@ -93,11 +90,11 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
             // Display the title and description of Garmin device status
             if(myService?.mSdkReady==false) {
                 // Show the reason why the Garmin SDK isn't ready
-                garminTitleText.text = "\uD83D\uDD34 ${getString(R.string.garmin_title_text)}"
+                garminTitleText.text = "${getString(R.string.light_symbol_red)} ${getString(R.string.garmin_title_text)}"
                 when (myService?.mSdkErrorStatus) {
-                    ConnectIQ.IQSdkErrorStatus.GCM_NOT_INSTALLED -> garminStatusText?.text = "Garmin Connect App is not installed"
-                    ConnectIQ.IQSdkErrorStatus.GCM_UPGRADE_NEEDED -> garminStatusText?.text = "Please update your Garmin Connect App"
-                    ConnectIQ.IQSdkErrorStatus.SERVICE_ERROR -> garminStatusText?.text = "Garmin Connect App returned a service error"
+                    ConnectIQ.IQSdkErrorStatus.GCM_NOT_INSTALLED -> garminStatusText?.text = getString(R.string.garmin_not_installed_text)
+                    ConnectIQ.IQSdkErrorStatus.GCM_UPGRADE_NEEDED -> garminStatusText?.text = getString(R.string.garmin_update_required_text)
+                    ConnectIQ.IQSdkErrorStatus.SERVICE_ERROR -> garminStatusText?.text = getString(R.string.garmin_service_error_text)
                 }
                 //ToDo: Once user installed the Garmin Connect App, we need to automatically try to re-initialize the SDK or at least provide the user with a button to retry.
             } else {
@@ -110,24 +107,22 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
                 }
 
                 // Set the traffic light color in the title according to connection status
-                val garminDeviceStatus: IQDevice.IQDeviceStatus? = myService?.getGarminDeviceStatus()
-                var trafficIcon = "\uD83D\uDD34"
-                when (garminDeviceStatus) {
-                    IQDevice.IQDeviceStatus.CONNECTED -> trafficIcon = "\uD83D\uDFE2"
-                    IQDevice.IQDeviceStatus.NOT_CONNECTED -> trafficIcon = "\uD83D\uDFE0"
+                //var trafficIcon: String
+                val trafficIcon = when (myService?.getGarminDeviceStatus()) {
+                    IQDevice.IQDeviceStatus.CONNECTED ->  getString(R.string.light_symbol_green)
+                    IQDevice.IQDeviceStatus.NOT_CONNECTED -> getString(R.string.light_symbol_orange)
+                    IQDevice.IQDeviceStatus.NOT_PAIRED -> getString(R.string.light_symbol_red)
+                    IQDevice.IQDeviceStatus.UNKNOWN -> getString(R.string.light_symbol_red)
+                    else -> getString(R.string.light_symbol_red)
                 }
-                garminTitleText.text = "${trafficIcon} ${getString(R.string.garmin_title_text)}"
+                garminTitleText.text = "$trafficIcon ${getString(R.string.garmin_title_text)}"
             }
 
-        } else {
-            percentageTextView?.text =  "-"
-            rangeText?.text = "-"
-            statusText?.text = "-"
         }
 
         // Handle case where user did not grant access to read notifications
-        if(notificationAccessGranted==false) {
-            statusText?.text = "Unable to read data from Onewheel App. Did you grant notification access?"
+        if(!notificationAccessGranted) {
+            statusText?.text = getString(R.string.unable_to_read_onewheel_data)
             notificationAccessButton?.visibility = View.VISIBLE
         } else {
             notificationAccessButton?.visibility = View.GONE
@@ -143,7 +138,7 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
         val enabledNotificationListeners: String =
             Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
         val packageName = packageName
-        return enabledNotificationListeners != null && enabledNotificationListeners.contains(
+        return enabledNotificationListeners.contains(
             packageName
         )
     }

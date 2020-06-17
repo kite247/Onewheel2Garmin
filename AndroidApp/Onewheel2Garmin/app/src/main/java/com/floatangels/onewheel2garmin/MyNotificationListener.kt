@@ -17,10 +17,6 @@ import com.garmin.android.connectiq.IQDevice.IQDeviceStatus
 import com.garmin.android.connectiq.exception.InvalidStateException
 import com.garmin.android.connectiq.exception.ServiceUnavailableException
 
-
-
-
-
 class MyNotificationListener() : NotificationListenerService() {
 
     private val myBinder = MyLocalBinder()
@@ -32,7 +28,7 @@ class MyNotificationListener() : NotificationListenerService() {
     var mSdkErrorStatus: IQSdkErrorStatus? = null
         private set
     private var devices: List<IQDevice>? = null
-    val MY_APP = "a3421feed289106a538cb9547ab12095"
+    val MY_APP = "f104747f134b48729a0426a6214b17e5"
     private var mMyApp: IQApp? = null
     private var mDevice: IQDevice? = null
     var onewheelBatteryPercentage: Int = -1
@@ -43,21 +39,20 @@ class MyNotificationListener() : NotificationListenerService() {
         private set
 
     fun getGarminDeviceStatusText(): String? {
-        var deviceStatusText = "status unknown"
+        var deviceStatusText = getString(R.string.device_status_unknown_text)
 
         if(!mSdkReady) {
             return deviceStatusText
         }
 
-        val status = mConnectIQ!!.getDeviceStatus(mDevice)
-        when (status) {
-            IQDeviceStatus.CONNECTED -> deviceStatusText = "connected"
-            IQDeviceStatus.NOT_CONNECTED -> deviceStatusText = "not connected"
-            IQDeviceStatus.NOT_PAIRED -> deviceStatusText = "not paired"
-            IQDeviceStatus.UNKNOWN -> deviceStatusText = "status unknown"
+        deviceStatusText = when (mConnectIQ!!.getDeviceStatus(mDevice)) {
+            IQDeviceStatus.CONNECTED -> getString(R.string.device_status_connected_text)
+            IQDeviceStatus.NOT_CONNECTED -> getString(R.string.device_status_not_connected_text)
+            IQDeviceStatus.NOT_PAIRED -> getString(R.string.device_status_not_paired_text)
+            IQDeviceStatus.UNKNOWN -> getString(R.string.device_status_unknown_text)
         }
 
-        return "${mDevice?.friendlyName} ${deviceStatusText}"
+        return "${mDevice?.friendlyName} $deviceStatusText"
     }
 
     fun getGarminDeviceStatus(): IQDeviceStatus? {
@@ -72,13 +67,12 @@ class MyNotificationListener() : NotificationListenerService() {
     override fun onListenerConnected() {
         super.onListenerConnected()
 
-        //val activeNotifications = activeNotifications
         for(notification in activeNotifications) {
             onNotificationPosted(notification)
         }
     }
     override fun onBind(intent: Intent): IBinder? {
-        if(intent.action.equals("com.floatangels.onewheel2garmin")) {
+        if(intent.action.equals(getString(R.string.intent_action))) {
             return myBinder
         }
         return super.onBind(intent)
