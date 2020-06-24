@@ -42,8 +42,13 @@
             <iq:product id="marqdriver"/>
             <iq:product id="marqexpedition"/>
             <iq:product id="vivoactive"/>
+            <iq:product id="vivoactive3"/>
+            <iq:product id="vivoactive3d"/>
+            <iq:product id="vivoactive3m"/>
+            <iq:product id="vivoactive3mlte"/>
             <iq:product id="vivoactive4"/>
             <iq:product id="vivoactive4s"/>
+            <iq:product id="vivoactive_hr"/>
         </iq:products>
         <iq:permissions>
             <iq:uses-permission id="Communications"/>

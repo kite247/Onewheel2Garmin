@@ -36,7 +36,7 @@ class CommView extends WatchUi.View {
 	    	dc.drawText(dc.getWidth() / 2, dc.getHeight() / 2,  Graphics.FONT_XTINY, "Waiting for data\nfrom mobile app...", Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 	    } else {
 	    	var percentageTextY = 0;
-	     	var batteryPercentageStr = batteryPercentage.toString()+"%";
+	     	var batteryPercentageStr = batteryPercentage.toString();
 	     	dc.drawText(dc.getWidth() / 2, percentageTextY,  Graphics.FONT_NUMBER_THAI_HOT, batteryPercentageStr, Graphics.TEXT_JUSTIFY_CENTER);
 	     	
 	     	var textDimensions = dc.getTextDimensions(batteryPercentageStr, Graphics.FONT_NUMBER_THAI_HOT);

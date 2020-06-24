@@ -4,12 +4,14 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.Settings
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.garmin.android.connectiq.ConnectIQ
 import com.garmin.android.connectiq.IQDevice
@@ -59,6 +61,11 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
             val infoIntent = Intent(this, InfoActivity::class.java)
             startActivity(infoIntent)
         }
+
+
+        logoImageView.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/floatangels/")))
+        })
     }
 
     override fun onResume() {

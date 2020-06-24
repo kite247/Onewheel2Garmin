@@ -92,7 +92,6 @@ class MyNotificationListener() : NotificationListenerService() {
     private val mDeviceEventListener =
         IQDeviceEventListener { iqDevice: IQDevice, iqDeviceStatus: IQDeviceStatus ->
 
-
                 Log.v(TAG, "In DeviceEventListener: ${iqDevice?.friendlyName} ${iqDeviceStatus.toString()}")
                 serviceCallback?.onDataUpdate()
 
@@ -189,7 +188,7 @@ class MyNotificationListener() : NotificationListenerService() {
                     if(shouldShowParseWarningMessage == true) {
                         Toast.makeText(
                             this@MyNotificationListener,
-                            "Unusual string detected, send an email to winkler.tom@gmail.com and include text '%s'".format(text),
+                            "Unusual string detected, send an email to support@floatangels.com and include text '%s'".format(text),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -283,11 +282,13 @@ class MyNotificationListener() : NotificationListenerService() {
                 mMyApp,
                 data.toList()
             ) { device, app, status ->
+                /*
                 Toast.makeText(
                     this@MyNotificationListener,
                     status.name,
                     Toast.LENGTH_SHORT
                 ).show()
+                 */
             }
         } catch (e: InvalidStateException) {
             Toast.makeText(
@@ -298,7 +299,7 @@ class MyNotificationListener() : NotificationListenerService() {
         } catch (e: ServiceUnavailableException) {
             Toast.makeText(
                 this,
-                "ConnectIQ service is unavailable.   Is Garmin Connect Mobile installed and running?",
+                "ConnectIQ service is unavailable. Is Garmin Connect Mobile installed and running?",
                 Toast.LENGTH_LONG
             ).show()
         }
