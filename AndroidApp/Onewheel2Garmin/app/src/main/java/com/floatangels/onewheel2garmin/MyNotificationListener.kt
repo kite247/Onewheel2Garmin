@@ -78,10 +78,6 @@ class MyNotificationListener() : NotificationListenerService() {
         return super.onBind(intent)
     }
 
-    fun getCurrentTime(): String {
-        return "test"
-    }
-
     inner class MyLocalBinder : Binder() {
         fun getService() : MyNotificationListener {
             return this@MyNotificationListener

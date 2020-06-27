@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity(),ServiceCallback {
             startActivity(infoIntent)
         }
 
-
         logoImageView.setOnClickListener(View.OnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/floatangels/")))
         })
