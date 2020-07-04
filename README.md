@@ -6,6 +6,15 @@ on your compatible Garmin watch. It works by reading the battery/range
 notification info from FutureMotion's Onewheel App (Android) and forwards the data
 to an app running on your Garmin watch.
 
+Project website can be found [here](https://www.floatangels.com/onewheel2garmin).
+
+Download from App Stores
+----------------------
+
+Builds for the apps in this project are also available here:
+- Garmin Watch App: [Garmin Connect IQ Store Link](https://apps.garmin.com/en-US/apps/cd720c95-609a-4cbf-991c-dfde0f42af8b)
+- Android App: [Google Play Store Link](https://play.google.com/store/apps/details?id=com.floatangels.onewheel2garmin&hl=en)
+
 Garmin Requirements
 -------------------
 
